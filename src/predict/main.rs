@@ -4,8 +4,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 struct Thetas {
-    t0: i64,
-    t1: i64,
+    t0: f64,
+    t1: f64,
 }
 
 fn get_thetas() -> Thetas {
@@ -17,18 +17,18 @@ fn get_thetas() -> Thetas {
             if let Some(result) = iter.next() {
                 match result {
                     Ok(t) => return t,
-                    Err(_e) => return Thetas { t0: 0, t1: 0 },
+                    Err(_e) => return Thetas { t0: 0.0, t1: 0.0 },
                 }
             } else {
                 Thetas {
-                    t0: 0,
-                    t1: 0,
+                    t0: 0.0,
+                    t1: 0.0,
                 }
             }
         },
         Err(e) => {
             println!("Error : {}", e);
-            return Thetas { t0: 0, t1: 0 }
+            return Thetas { t0: 0.0, t1: 0.0 }
         }
     }
 }
@@ -36,8 +36,6 @@ fn get_thetas() -> Thetas {
 fn main() {
     let mileage: i64;
     let thetas: Thetas = get_thetas();
-
-    println!("T0 = {} - T1 = {}", thetas.t0, thetas.t1);
 
     loop {
         let mut input_line = String::new();
@@ -66,5 +64,5 @@ fn main() {
     };
 
     println!("Mileage given : {mileage}");
-    println!("Price of a car with {} mileage : {}", mileage, (thetas.t0 + (thetas.t1 * mileage)));
+    println!("Price of a car with {} mileage : {}", mileage, (thetas.t0 + (thetas.t1 * mileage as f64)) as i64);
 } 
